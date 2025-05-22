@@ -1,0 +1,71 @@
+{
+  "C2v": {
+    "order": 4,
+    "classes": ["E", "C2", "σv(xz)", "σv'(yz)"],
+    "irreducible": [
+      { "symbol": "A1", "characters": [1, 1, 1, 1] },
+      { "symbol": "A2", "characters": [1, 1, -1, -1] },
+      { "symbol": "B1", "characters": [1, -1, 1, -1] },
+      { "symbol": "B2", "characters": [1, -1, -1, 1] }
+    ]
+  },
+  "C3v": {
+    "order": 6,
+    "classes": ["E", "2C3", "3σv"],
+    "irreducible": [
+      { "symbol": "A1", "characters": [1, 1, 1] },
+      { "symbol": "A2", "characters": [1, 1, -1] },
+      { "symbol": "E", "characters": [2, -1, 0] }
+    ]
+  },
+  "C4v": {
+    "order": 8,
+    "classes": ["E", "2C4", "C2", "2σv", "2σd"],
+    "irreducible": [
+      { "symbol": "A1", "characters": [1, 1, 1, 1, 1] },
+      { "symbol": "A2", "characters": [1, 1, 1, -1, -1] },
+      { "symbol": "B1", "characters": [1, -1, 1, 1, -1] },
+      { "symbol": "B2", "characters": [1, -1, 1, -1, 1] },
+      { "symbol": "E", "characters": [2, 0, -2, 0, 0] }
+    ]
+  },
+  "D3h": {
+    "order": 12,
+    "classes": ["E", "2C3", "3C2'", "σh", "2S3", "3σv"],
+    "irreducible": [
+      { "symbol": "A1'", "characters": [1, 1, 1, 1, 1, 1] },
+      { "symbol": "A2'", "characters": [1, 1, -1, 1, 1, -1] },
+      { "symbol": "E'", "characters": [2, -1, 0, 2, -1, 0] },
+      { "symbol": "A1''", "characters": [1, 1, 1, -1, -1, -1] },
+      { "symbol": "A2''", "characters": [1, 1, -1, -1, -1, 1] },
+      { "symbol": "E''", "characters": [2, -1, 0, -2, 1, 0] }
+    ]
+  },
+  "D4h": {
+    "order": 16,
+    "classes": ["E", "2C4", "C2", "2C2'", "2C2''", "i", "2S4", "σh", "2σv", "2σd"],
+    "irreducible": [
+      { "symbol": "A1g", "characters": [1, 1, 1, 1, 1, 1, 1, 1, 1, 1] },
+      { "symbol": "A2g", "characters": [1, 1, 1, -1, -1, 1, 1, 1, -1, -1] },
+      { "symbol": "B1g", "characters": [1, -1, 1, 1, -1, 1, -1, 1, 1, -1] },
+      { "symbol": "B2g", "characters": [1, -1, 1, -1, 1, 1, -1, 1, -1, 1] },
+      { "symbol": "Eg", "characters": [2, 0, -2, 0, 0, 2, 0, 2, 0, 0] },
+      { "symbol": "A1u", "characters": [1, 1, 1, 1, 1, -1, -1, -1, -1, -1] },
+      { "symbol": "A2u", "characters": [1, 1, 1, -1, -1, -1, -1, -1, 1, 1] },
+      { "symbol": "B1u", "characters": [1, -1, 1, 1, -1, -1, 1, -1, -1, 1] },
+      { "symbol": "B2u", "characters": [1, -1, 1, -1, 1, -1, 1, -1, 1, -1] },
+      { "symbol": "Eu", "characters": [2, 0, -2, 0, 0, -2, 0, -2, 0, 0] }
+    ]
+  },
+  "Td": {
+    "order": 24,
+    "classes": ["E", "8C3", "3C2", "6S4", "6σd"],
+    "irreducible": [
+      { "symbol": "A1", "characters": [1, 1, 1, 1, 1] },
+      { "symbol": "A2", "characters": [1, 1, -1, -1, 1] },
+      { "symbol": "E", "characters": [2, -1, 2, 0, 0] },
+      { "symbol": "T1", "characters": [3, 0, -1, 1, -1] },
+      { "symbol": "T2", "characters": [3, 0, -1, -1, 1] }
+    ]
+  }
+}

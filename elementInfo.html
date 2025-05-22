@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" class="bg-white text-black dark:bg-[#252525] dark:text-white">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+  <meta name="author" content="Your Name">
+  <meta name="description" content="Molecular symmetry and point group viewer">
+  <link rel="icon" href="icon.png">
+  <script src="https://unpkg.com/feather-icons"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <title>Compound Symmetry Viewer</title>
+</head>
+
+<body class="min-h-screen flex flex-col items-center justify-top px-4 transition-all">
+  <header class="w-full flex items-center gap-3 px-4 py-3 border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-[#252525]">
+    <button onclick="history.back()" class="flex items-center group">
+      <i data-feather="arrow-left" class="w-5 h-5 text-gray-700 dark:text-gray-300 group-hover:text-black dark:group-hover:text-white transition-all"></i>
+    </button>
+    <h1 class="text-lg font-semibold tracking-tight">Symmetry
+    </h1>
+  </header>
+  <div class="w-full max-w-md space-y-6">
+    <h1 class="text-2xl font-bold py-2">Compound Symmetry Info</h1>
+    <div class="relative">
+      <input id="compoundInput" type="text" placeholder="Enter compound name or formula" class="w-full px-4 py-2 border dark:border-gray-600 rounded-md bg-white dark:bg-[#2f2f2f] focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all" oninput="showSuggestions()">
+      <ul id="suggestions" class="absolute z-10 w-full mt-1 bg-white dark:bg-[#2f2f2f] border dark:border-gray-700 rounded-md max-h-48 overflow-y-auto hidden shadow-lg transition-all"></ul>
+    </div>
+    <button onclick="searchCompound()" class="w-full flex items-center justify-center gap-2 bg-red-600 dark:bg-red-500 text-white px-4 py-2 rounded-md font-semibold hover:bg-blue-700 dark:hover:bg-blue-600 transition-all">
+      <i data-feather="search"></i> Search
+    </button>
+    <div id="result" class="space-y-4"></div>
+  </div>
+
+  <script>
+    feather.replace();
+    let data = {}
+    fetch('compounds.json')
+      .then(res => res.json())
+      .then(json => data = json)
+
+    function searchCompound(selected) {
+      const input = document.getElementById('compoundInput')
+      const name = (selected || input.value).trim().toLowerCase()
+      const container = document.getElementById('result')
+      const list = document.getElementById('suggestions')
+      input.value = selected || input.value
+      list.classList.add('hidden')
+      container.innerHTML = ''
+      const found = data.compounds.find(c => c.name.toLowerCase() === name || c.formula.toLowerCase() === name)
+      if (found) {
+        container.innerHTML = `
+          <div class="p-4 rounded-lg border dark:border-gray-600 bg-gray-100 dark:bg-[#333] space-y-2 animate-fade-in-up">
+            <div><strong>Name:</strong> ${found.name}</div>
+            <div><strong>Formula:</strong> ${found.formula}</div>
+            <div><strong>Point Group:</strong> ${found.pointGroup}</div>
+            <div><strong>Group Order:</strong> ${found.order}</div>
+            <div><strong>Operations:</strong> ${found.operations.join(', ')}</div>
+            <div><strong>Shape:</strong> ${found.shape}</div>
+            <div><strong>Symmetry Elements:</strong> ${found.symmetryElements.join(', ')}</div>
+            <div><strong>Examples:</strong> ${found.examples.join(', ')}</div>
+          </div>`
+      } else {
+        container.innerHTML = `<div class="text-red-600 dark:text-red-400 animate-pulse">Compound not found.</div>`
+      }
+
+    }
+
+    function showSuggestions() {
+      const input = document.getElementById('compoundInput')
+      const list = document.getElementById('suggestions')
+      const query = input.value.trim().toLowerCase()
+      list.innerHTML = ''
+      if (!query || !data.compounds) return list.classList.add('hidden')
+      const filtered = data.compounds.filter(c => c.name.toLowerCase().includes(query) || c.formula.toLowerCase().includes(query)).slice(0, 6)
+      if (filtered.length === 0) return list.classList.add('hidden')
+      filtered.forEach(item => {
+        const li = document.createElement('li')
+        li.className = 'px-4 py-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-[#3a3a3a] transition-all'
+        li.textContent = `${item.name} (${item.formula})`
+        li.onclick = () => searchCompound(item.name)
+        list.appendChild(li)
+      })
+      list.classList.remove('hidden')
+    }
+  </script>
+</body>
+
+</html>

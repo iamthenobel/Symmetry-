@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" class="bg-white text-black dark:bg-[#252525] dark:text-white">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+  <meta name="author" content="Your Name">
+  <meta name="description" content="Comprehensive list of point groups and their details">
+  <link rel="icon" href="icon.png">
+  <script src="https://unpkg.com/feather-icons"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <title>Point Groups Table</title>
+</head>
+<body class="min-h-screen px-2 transition-all">
+  <header class="w-full flex items-center gap-3 px-4 py-3 border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-[#252525]">
+            <button onclick="history.back()" class="flex items-center group">
+              <i data-feather="arrow-left" class="w-5 h-5 text-gray-700 dark:text-gray-300 group-hover:text-black dark:group-hover:text-white transition-all"></i>
+            </button>
+            <h1 class="text-lg font-semibold tracking-tight">Symmetry
+            </h1>
+          </header>
+
+  <div class="max-w-xl mx-auto mb-6 py-2 px-4">
+    <h1 class="text-2xl font-bold mb-6">Point Groups Reference</h1>
+    <input id="searchInput" type="text" placeholder="Search by group, operation, or example" class="w-full px-4 py-2 border dark:border-gray-600 rounded-md bg-white dark:bg-[#2f2f2f] focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all" oninput="filterTable()">
+  </div>
+  <div class="overflow-x-auto">
+    <table class="min-w-full text-sm text-left border-collapse rounded-md overflow-hidden">
+      <thead class="bg-gray-100 dark:bg-[#2e2e2e] text-black dark:text-white uppercase tracking-wide text-xs">
+        <tr>
+          <th class="px-4 py-3 border dark:border-gray-700">Point Group</th>
+          <th class="px-4 py-3 border dark:border-gray-700">Operations</th>
+          <th class="px-4 py-3 border dark:border-gray-700">Examples</th>
+        </tr>
+      </thead>
+      <tbody id="pgTableBody" class="bg-white dark:bg-[#2a2a2a] text-black dark:text-white divide-y divide-gray-200 dark:divide-gray-700"></tbody>
+    </table>
+  </div>
+
+  <script>
+    const pointGroups = [
+      { group: "C1", operations: ["E"], examples: ["CHClBrI"] },
+      { group: "Cs", operations: ["E", "σ"], examples: ["CH2ClBr"] },
+      { group: "Ci", operations: ["E", "i"], examples: ["trans-1,2-dichloroethylene"] },
+      { group: "C2", operations: ["E", "C2"], examples: ["H2O2"] },
+      { group: "C2v", operations: ["E", "C2", "σv", "σv'"], examples: ["H2O", "NH3"] },
+      { group: "C3v", operations: ["E", "2C3", "3σv"], examples: ["NH3"] },
+      { group: "D2h", operations: ["E", "3C2", "i", "σh", "2σv", "2σd"], examples: ["ethylene"] },
+      { group: "D3h", operations: ["E", "2C3", "3C2", "σh", "2S3", "3σv"], examples: ["BF3"] },
+      { group: "D∞h", operations: ["E", "C∞", "σv", "i", "S∞", "σh"], examples: ["CO2"] },
+      { group: "Td", operations: ["E", "8C3", "3C2", "6S4", "6σd"], examples: ["CH4"] },
+      { group: "Oh", operations: ["E", "8C3", "6C4", "3C2", "i", "6S4", "8S6", "3σh", "6σd"], examples: ["SF6"] },
+      { group: "Ih", operations: ["E", "15C2", "20C3", "24C5", "i", "20S6", "24S10", "15σ"], examples: ["C60"] }
+    ]
+
+    function renderTable(list) {
+      const body = document.getElementById('pgTableBody')
+      body.innerHTML = ''
+      list.forEach(pg => {
+        const row = document.createElement('tr')
+        row.className = 'hover:bg-gray-50 dark:hover:bg-[#333] transition-all'
+        row.innerHTML = `
+          <td class="px-4 py-3 border dark:border-gray-700 font-semibold">${pg.group}</td>
+          <td class="px-4 py-3 border dark:border-gray-700">${pg.operations.join(', ')}</td>
+          <td class="px-4 py-3 border dark:border-gray-700">${pg.examples.join(', ')}</td>
+        `
+        body.appendChild(row)
+      })
+      feather.replace()
+    }
+
+    function filterTable() {
+      const input = document.getElementById('searchInput').value.trim().toLowerCase()
+      const filtered = pointGroups.filter(pg =>
+        pg.group.toLowerCase().includes(input) ||
+        pg.operations.join(',').toLowerCase().includes(input) ||
+        pg.examples.join(',').toLowerCase().includes(input)
+      )
+      renderTable(filtered)
+    }
+
+    renderTable(pointGroups)
+  </script>
+</body>
+</html>

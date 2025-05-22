@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" class="bg-white text-black dark:bg-[#252525] dark:text-white">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+  <meta name="author" content="Your Name">
+  <meta name="description" content="Symmetry formulas, definitions, and symbol meanings">
+  <link rel="icon" href="icon.png">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      <script src="https://unpkg.com/feather-icons"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <title>Symmetry Formulas & Definitions</title>
+</head>
+<body class="min-h-screen px-2 transition-all">
+      <header class="w-full flex items-center gap-3 px-4 py-3 border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-[#252525]">
+      <button onclick="history.back()" class="flex items-center group">
+        <i data-feather="arrow-left" class="w-5 h-5 text-gray-700 dark:text-gray-300 group-hover:text-black dark:group-hover:text-white transition-all"></i>
+      </button>
+      <h1 class="text-lg font-semibold tracking-tight">Symmetry
+      </h1>
+    </header>
+
+  <div class="max-w-5xl mx-auto space-y-6 text-base leading-relaxed p-4">
+<h1 class="text-2xl font-bold text-left mb-6">Symmetry Formulas & Definitions</h1>
+    <div class="overflow-x-auto p-6 rounded-lg bg-gray-100 dark:bg-[#2f2f2f] border dark:border-gray-700 animate-fade-in-up">
+      <h2 class="text-xl font-semibold mb-2">Group Order</h2>
+      <p><strong>Formula:</strong> $$ h = \sum_{i=1}^{n} n_i $$</p>
+      <p><strong>Definitions:</strong></p>
+      <ul class="list-disc pl-6">
+        <li><strong>h:</strong> Order of the group (total number of symmetry operations)</li>
+        <li><strong>n<sub>i</sub>:</strong> Number of operations in the i-th class</li>
+      </ul>
+    </div>
+
+    <div class="overflow-x-auto p-6 rounded-lg bg-gray-100 dark:bg-[#2f2f2f] border dark:border-gray-700 animate-fade-in-up">
+      <h2 class="text-xl font-semibold mb-2">Character Orthogonality</h2>
+      <p><strong>Formula:</strong> $$ \sum_{R} \chi^{(i)}(R) \chi^{(j)}(R)^* = h \delta_{ij} $$</p>
+      <ul class="list-disc pl-6">
+        <li><strong>χ<sup>(i)</sup>(R):</strong> Character of operation R in representation i</li>
+        <li><strong>χ<sup>(j)</sup>(R):</strong> Character in representation j</li>
+        <li><strong>R:</strong> Symmetry operation</li>
+        <li><strong>h:</strong> Group order</li>
+        <li><strong>δ<sub>ij</sub>:</strong> Kronecker delta (1 if i = j, 0 otherwise)</li>
+      </ul>
+    </div>
+
+    <div class="overflow-x-auto p-6 rounded-lg bg-gray-100 dark:bg-[#2f2f2f] border dark:border-gray-700 animate-fade-in-up">
+      <h2 class="text-xl font-semibold mb-2">Reduction of Representations</h2>
+      <p><strong>Formula:</strong> $$ a_i = \frac{1}{h} \sum_{R} n_R \chi^{\text{red}}(R) \chi^{(i)}(R) $$</p>
+      <ul class="list-disc pl-6">
+        <li><strong>a<sub>i</sub>:</strong> Number of times irreducible representation i appears</li>
+        <li><strong>χ<sup>red</sup>(R):</strong> Character of reducible representation</li>
+        <li><strong>χ<sup>(i)</sup>(R):</strong> Character of irreducible representation i</li>
+        <li><strong>n<sub>R</sub>:</strong> Number of operations in the class of R</li>
+        <li><strong>h:</strong> Group order</li>
+      </ul>
+    </div>
+
+    <div class="overflow-x-auto p-6 rounded-lg bg-gray-100 dark:bg-[#2f2f2f] border dark:border-gray-700 animate-fade-in-up">
+      <h2 class="text-xl font-semibold mb-2">Great Orthogonality Theorem</h2>
+      <p><strong>Formula:</strong> $$ \sum_{R} D^{(i)}_{mn}(R) D^{(j)}_{pq}(R)^* = \frac{h}{l_i} \delta_{ij} \delta_{mp} \delta_{nq} $$</p>
+      <ul class="list-disc pl-6">
+        <li><strong>D<sup>(i)</sup><sub>mn</sub>(R):</strong> Matrix element m,n of representation i under R</li>
+        <li><strong>h:</strong> Group order</li>
+        <li><strong>l<sub>i</sub>:</strong> Dimension of representation i</li>
+        <li><strong>δ:</strong> Kronecker delta</li>
+      </ul>
+    </div>
+
+    <div class="overflow-x-auto p-6 rounded-lg bg-gray-100 dark:bg-[#2f2f2f] border dark:border-gray-700 animate-fade-in-up">
+      <h2 class="text-xl font-semibold mb-2">Normal Mode Count</h2>
+      <p><strong>Formula:</strong> $$ 3N = T + R + V $$</p>
+      <ul class="list-disc pl-6">
+        <li><strong>N:</strong> Number of atoms</li>
+        <li><strong>T:</strong> Translational degrees (3 total)</li>
+        <li><strong>R:</strong> Rotational degrees (2 or 3)</li>
+        <li><strong>V:</strong> Vibrational degrees of freedom</li>
+      </ul>
+    </div>
+
+    <div class="overflow-x-auto p-6 rounded-lg bg-gray-100 dark:bg-[#2f2f2f] border dark:border-gray-700 animate-fade-in-up">
+      <h2 class="text-xl font-semibold mb-2">Symmetry Species of Motions</h2>
+      <p><strong>Formula:</strong> $$ \Gamma = \sum_{R} \chi(R) R $$</p>
+      <ul class="list-disc pl-6">
+        <li><strong>Γ:</strong> Total representation of motion</li>
+        <li><strong>χ(R):</strong> Character under operation R</li>
+        <li><strong>R:</strong> Symmetry operation</li>
+      </ul>
+    </div>
+
+    <div class="overflow-x-auto p-6 rounded-lg bg-gray-100 dark:bg-[#2f2f2f] border dark:border-gray-700 animate-fade-in-up">
+      <h2 class="text-xl font-semibold mb-2">Symmetry Elements</h2>
+      <ul class="list-disc pl-6">
+        <li><strong>E:</strong> Identity</li>
+        <li><strong>C<sub>n</sub>:</strong> Proper rotation</li>
+        <li><strong>σ:</strong> Mirror plane (v = vertical, h = horizontal, d = diagonal)</li>
+        <li><strong>i:</strong> Inversion center</li>
+        <li><strong>S<sub>n</sub>:</strong> Improper rotation (rotation + reflection)</li>
+      </ul>
+    </div>
+
+  </div>
+  <script>feather.replace()</script>
+</body>
+</html>

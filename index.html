@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" class="bg-white text-black dark:bg-[#252525] dark:text-white">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+  <meta name="author" content="Your Name">
+  <meta name="description" content="Symmetry tools dashboard">
+  <link rel="icon" href="icon.png">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/feather-icons"></script>
+  <title>Symmetry Dashboard</title>
+</head>
+<body class="min-h-screen flex flex-col justify-between transition-all">
+
+  <header class="w-full px-6 py-4 flex items-center justify-between border-b dark:border-gray-700 relative z-20">
+    <h1 class="text-xl font-bold">Symmetry</h1>
+    <div class="relative">
+      <button id="menuToggle" class="flex items-center justify-center w-10 h-10 rounded-full hover:bg-gray-200 dark:hover:bg-[#333] transition">
+        <i data-feather="more-vertical"></i>
+      </button>
+      <nav id="menu" class="hidden absolute right-0 mt-2 w-44 rounded-md shadow-lg bg-white dark:bg-[#2f2f2f] border dark:border-gray-600 divide-y divide-gray-100 dark:divide-gray-700">
+        <a href="#" class="block px-4 py-3 text-sm hover:bg-gray-100 dark:hover:bg-[#3a3a3a] transition">About</a>
+        <a href="#" class="block px-4 py-3 text-sm hover:bg-gray-100 dark:hover:bg-[#3a3a3a] transition">Support</a>
+        <a href="#" class="block px-4 py-3 text-sm hover:bg-gray-100 dark:hover:bg-[#3a3a3a] transition">Other Apps</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="px-6 py-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto w-full">
+    <a href="elementInfo.html" class="group relative overflow-hidden bg-gray-100 dark:bg-[#2f2f2f] rounded-xl shadow hover:scale-[1.02] transition-all">
+      <img src="https://i.postimg.cc/05KqgNdw/IMG-6915.png" alt="" class="absolute top-0 right-0 h-full object-cover opacity-80 group-hover:opacity-60 transition-all dark:mix-blend-screen">
+      <div class="relative z-10 p-6 space-y-2">
+        <h2 class="text-xl font-bold">Compound Info</h2>
+        <p class="text-sm opacity-80">Search molecular formulas and view point group data.</p>
+      </div>
+    </a>
+    <a href="pointGroupsData.html" class="group relative overflow-hidden bg-gray-100 dark:bg-[#2f2f2f] rounded-xl shadow hover:scale-[1.02] transition-all">
+      <img src="https://i.postimg.cc/3wP6ZX4J/IMG-6921.png" alt="" class="absolute top-0 right-0 h-full object-cover opacity-80 group-hover:opacity-80 transition-all dark:mix-blend-screen">
+      <div class="relative z-10 p-6 space-y-2">
+        <h2 class="text-xl font-bold">Point Groups</h2>
+        <p class="text-sm opacity-80">Explore all symmetry point groups with operations and examples.</p>
+      </div>
+    </a>
+    <a href="symmFormulas.html" class="group relative overflow-hidden bg-gray-100 dark:bg-[#2f2f2f] rounded-xl shadow hover:scale-[1.02] transition-all">
+      <img src="https://i.postimg.cc/4d97hgtF/IMG-6919.webp" alt="" class="absolute top-0 right-0 h-full object-cover opacity-80 group-hover:opacity-60 transition-all dark:mix-blend-screen">
+      <div class="relative z-10 p-6 space-y-2">
+        <h2 class="text-xl font-bold">Formulas</h2>
+        <p class="text-sm opacity-80">Math equations and definitions in molecular symmetry.</p>
+      </div>
+    </a>
+    <a href="reduce.html" class="group relative overflow-hidden bg-gray-100 dark:bg-[#2f2f2f] rounded-xl shadow hover:scale-[1.02] transition-all">
+      <img src="https://i.postimg.cc/s2BqS62N/IMG-6920.png" alt="" class="absolute top-0 right-0 h-full object-cover opacity-80 group-hover:opacity-60 transition-all dark:mix-blend-screen">
+      <div class="relative z-10 p-6 space-y-2">
+        <h2 class="text-xl font-bold">Reducable</h2>
+        <p class="text-sm opacity-80">Calculate the irreducable representations of a reducable representations.</p>
+      </div>
+    </a>
+  </main>
+
+  <footer class="w-full px-6 py-6 border-t dark:border-gray-700 flex flex-col md:flex-row items-center justify-between gap-4 text-sm">
+    <div>&copy; 2025 Made by THE BOSS</div>
+    <div class="flex gap-6">
+      <a href="https://github.com/iamthenobel" class="hover:text-blue-500 transition"><i data-feather="github"></i></a>
+      <a href="https://www.instagram.com/iam357286?igsh=NTRwaHEzcDFkYWZ0&utm_source=qr" class="hover:text-blue-500 transition"><i data-feather="instagram"></i></a>
+      <a href="iamtheboss357286@gmail.com" class="hover:text-blue-500 transition"><i data-feather="mail"></i></a>
+    </div>
+  </footer>
+
+  <script>
+    feather.replace()
+    const toggle = document.getElementById("menuToggle")
+    const menu = document.getElementById("menu")
+    document.addEventListener("click", e => {
+      if (toggle.contains(e.target)) {
+        menu.classList.toggle("hidden")
+      } else {
+        menu.classList.add("hidden")
+      }
+    })
+  </script>
+</body>
+</html>
