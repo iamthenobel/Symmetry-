@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en" class="bg-white text-black dark:bg-[#252525] dark:text-white">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+  <meta name="author" content="Your Name">
+  <meta name="description" content="Dynamic matrix calculator">
+  <link rel="icon" href="icon.png">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/feather-icons"></script>
+  <title>Matrix Calculator</title>
+</head>
+<body class="min-h-screen px-4 pb-6 flex flex-col gap-6 items-center transition-all">
+      <header class="w-full flex items-center gap-3 px-4 py-3 border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-[#252525]">
+        <button onclick="history.back()" class="flex items-center group">
+          <i data-feather="arrow-left" class="w-5 h-5 text-gray-700 dark:text-gray-300 group-hover:text-black dark:group-hover:text-white transition-all"></i>
+        </button>
+        <h1 class="text-lg font-semibold tracking-tight">Symmetry
+        </h1>
+      </header>
+  <div class="w-full max-w-5xl space-y-6">
+    <h1 class=" text-2xl font-bold">Dynamic Matrix Calculator</h1>
+
+    <div class="space-y-4">
+      <label class="block font-medium">Number of Matrices</label>
+      <select id="matrixCount" class="w-full px-3 py-2 rounded-md border dark:border-gray-600 bg-white dark:bg-[#2f2f2f]" onchange="renderDimensionInputs()">
+        <option value="1">1</option>
+        <option value="2" selected>2</option>
+      </select>
+
+      <div id="dimensionInputs" class="grid gap-4"></div>
+    </div>
+
+    <button onclick="generateMatrixInputs()" class="px-4 py-2 rounded-md font-semibold bg-orange-600 dark:bg-orange-500 text-white hover:bg-orange-700 dark:hover:bg-orange-600 transition-all">Generate Matrices</button>
+
+    <div id="matrixInputs" class="grid gap-6"></div>
+
+    <div id="operations" class="grid sm:grid-cols-2 lg:grid-cols-4 gap-3 text-sm"></div>
+
+    <pre id="output" class="whitespace-pre-wrap bg-gray-100 dark:bg-[#2f2f2f] p-4 rounded-md border dark:border-gray-600 min-h-[150px] mt-4"></pre>
+  </div>
+
+  <script>
+    feather.replace()
+
+    const dimensionInputs = document.getElementById('dimensionInputs')
+    const matrixInputs = document.getElementById('matrixInputs')
+    const operations = document.getElementById('operations')
+    const output = document.getElementById('output')
+
+    const renderDimensionInputs = () => {
+      const count = +document.getElementById('matrixCount').value
+      dimensionInputs.innerHTML = ''
+      for (let i = 0; i < count; i++) {
+        const div = document.createElement('div')
+        div.className = 'flex flex-col gap-2'
+        div.innerHTML = `
+          <label class="font-medium">Dimensions for Matrix ${String.fromCharCode(65 + i)} (e.g. 2x3)</label>
+          <input id="size-${i}" type="text" value="2x2" class="w-full px-3 py-2 rounded-md border dark:border-gray-600 bg-white dark:bg-[#2f2f2f]">
+        `
+        dimensionInputs.appendChild(div)
+      }
+    }
+
+    const getMatrixValues = id => {
+      const inputs = document.querySelectorAll(`[data-matrix="${id}"]`)
+      const rows = +inputs[0].getAttribute('data-rows')
+      const cols = +inputs[0].getAttribute('data-cols')
+      return [...Array(rows)].map((_, i) =>
+        [...Array(cols)].map((_, j) =>
+          parseFloat(inputs[i * cols + j].value) || 0))
+    }
+
+    const transpose = m => m[0].map((_, i) => m.map(row => row[i]))
+    const multiply = (a, b) => a.map((r, i) => b[0].map((_, j) => r.reduce((s, _, k) => s + a[i][k] * b[k][j], 0)))
+    const determinant = m => m.length === 2 ? m[0][0] * m[1][1] - m[0][1] * m[1][0] : m[0].reduce((det, v, i) => det + ((-1) ** i) * v * determinant(m.slice(1).map(row => row.filter((_, j) => j !== i))), 0)
+    const inverse = m => {
+      const det = determinant(m)
+      if (det === 0) return null
+      const cofactors = m.map((r, i) => r.map((_, j) =>
+        ((-1) ** (i + j)) * determinant(m.filter((_, x) => x !== i).map(row => row.filter((_, y) => y !== j)))))
+      return transpose(cofactors).map(row => row.map(val => val / det))
+    }
+    const trace = m => m.reduce((sum, row, i) => sum + row[i], 0)
+    const isOrthogonal = m => {
+      const mt = transpose(m)
+      const mm = multiply(m, mt)
+      return JSON.stringify(mm) === JSON.stringify(identity(m.length))
+    }
+    const identity = n => [...Array(n)].map((_, i) => [...Array(n)].map((_, j) => i === j ? 1 : 0))
+    const formatMatrix = m => m.map(r => r.join('\t')).join('\n')
+
+    function generateMatrixInputs() {
+      const count = +document.getElementById('matrixCount').value
+      matrixInputs.innerHTML = ''
+      operations.innerHTML = ''
+      let sizes = []
+
+      for (let i = 0; i < count; i++) {
+        const val = document.getElementById(`size-${i}`).value.toLowerCase().split('x')
+        const rows = parseInt(val[0])
+        const cols = parseInt(val[1])
+        if (!rows || !cols) return
+        sizes.push({ rows, cols })
+
+        const container = document.createElement('div')
+        container.className = 'space-y-2'
+        container.innerHTML = `<div class="font-semibold">Matrix ${String.fromCharCode(65 + i)}</div>`
+        const grid = document.createElement('div')
+        grid.className = `grid grid-cols-${cols} gap-2`
+        for (let r = 0; r < rows; r++) {
+          for (let c = 0; c < cols; c++) {
+            const input = document.createElement('input')
+            input.type = 'number'
+            input.className = 'w-full px-2 py-1 rounded-md border dark:border-gray-600 bg-white dark:bg-[#2f2f2f] text-center'
+            input.setAttribute('data-matrix', i)
+            input.setAttribute('data-rows', rows)
+            input.setAttribute('data-cols', cols)
+            grid.appendChild(input)
+          }
+        }
+        container.appendChild(grid)
+        matrixInputs.appendChild(container)
+      }
+
+      const opList = {
+        1: ['det', 'inv', 'trace', 'trans', 'ort'],
+        2: ['add', 'sub', 'mul', 'div']
+      }
+
+      const labels = {
+        det: 'Determinant', inv: 'Inverse', trace: 'Trace',
+        trans: 'Transpose', ort: 'Orthogonal?',
+        add: 'Add', sub: 'Subtract', mul: 'Multiply', div: 'Divide'
+      }
+
+      const validOps = opList[count]
+
+      validOps.forEach(key => {
+        const btn = document.createElement('button')
+        btn.textContent = labels[key]
+        btn.className = 'px-4 py-2 rounded-md font-semibold bg-orange-600 dark:bg-orange-500 text-white hover:bg-orange-700 dark:hover:bg-orange-600 transition-all'
+        btn.onclick = () => performOperation(key, sizes)
+        operations.appendChild(btn)
+      })
+    }
+
+    function performOperation(type, sizes) {
+      const a = getMatrixValues(0)
+      const b = sizes.length === 2 ? getMatrixValues(1) : null
+      let result
+
+      try {
+        switch (type) {
+          case 'add':
+            result = a.map((r, i) => r.map((v, j) => v + b[i][j]))
+            break
+          case 'sub':
+            result = a.map((r, i) => r.map((v, j) => v - b[i][j]))
+            break
+          case 'mul':
+            result = multiply(a, b)
+            break
+          case 'div':
+            const inv = inverse(b)
+            if (!inv) return output.textContent = 'Matrix B not invertible.'
+            result = multiply(a, inv)
+            break
+          case 'det':
+            result = determinant(a)
+            break
+          case 'inv':
+            result = inverse(a)
+            if (!result) return output.textContent = 'Matrix not invertible.'
+            break
+          case 'trace':
+            result = trace(a)
+            break
+          case 'trans':
+            result = transpose(a)
+            break
+          case 'ort':
+            result = isOrthogonal(a) ? 'Yes' : 'No'
+            break
+        }
+        output.textContent = Array.isArray(result) ? formatMatrix(result) : result
+      } catch {
+        output.textContent = 'Invalid operation or dimensions.'
+      }
+    }
+
+    renderDimensionInputs()
+  </script>
+</body>
+</html>
